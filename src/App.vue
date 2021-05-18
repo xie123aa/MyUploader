@@ -31,6 +31,10 @@
               <i class="el-icon-picture"></i>
               <span slot="title">图片上传</span>
             </el-menu-item>
+            <el-menu-item index="fileDownload" @click="redirectUrl('/fileDownload')">
+              <i class="el-icon-download"></i>
+              <span slot="title">文件下载</span>
+            </el-menu-item>
           </el-menu>
         </el-aside>
         <el-main class="my-main">

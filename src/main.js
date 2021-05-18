@@ -7,7 +7,9 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import global from './Global'
 import VueResource from 'vue-resource'
-
+//ÒýÈëaxios
+import axios from 'axios';
+Vue.prototype.axios = axios;
 
 Vue.config.productionTip = false
 Vue.prototype.global = global;

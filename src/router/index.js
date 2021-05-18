@@ -6,6 +6,7 @@ import QuickUpload from '../components/QuickUpload'
 import SingleFileUpload from '../components/SingleFileUpload'
 import MultiFileUpload from  '../components/MultiFileUpload'
 import PictureUpload from '../components/PictureUpload'
+import FileDownload from '../components/FileDownload'
 
 Vue.use(Router)
 
@@ -17,6 +18,7 @@ export default new Router({
     {path:'/quickUpload',component:QuickUpload,name:'quickUpload'},
     {path:'/multiFileUpload',component:MultiFileUpload,name:'multiFileUpload'},
     {path:'/pictureUpload',component:PictureUpload,name:'pictureUpload'},
+    {path:'/FileDownload',component:FileDownload,name:'FileDownload'},
     {path:'/',component:SingleFileUpload,name:'singleFileUpload'}
   ]
 })
