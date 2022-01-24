@@ -3,6 +3,7 @@
     <template>
       <el-table
           :data="fileList"
+          stripe
           style="width: 100%">
         <el-table-column
             prop="name"
@@ -17,6 +18,12 @@
         <el-table-column
             prop="uploadTime"
             label="上传时间">
+        </el-table-column>
+        <el-table-column
+          label="图片预览">
+          <template slot-scope="scope">
+            <img width="240px" height="240px" :src="server_config.url+'/File/downloadThumb/'+scope.row.id" class="image">
+          </template>
         </el-table-column>
         <el-table-column
             fixed="right"
@@ -42,11 +49,12 @@
      }},
    methods:{
      handleClick(row) {
-       this.axios.get(this.server_config.url+"/File/download/"+row.id).then(function(response){
-       }).catch(function(err){
-         console.log(err);
-       });
-       console.log(row.id);
+       window.open(this.server_config.url+"/File/download/"+row.id)
+       // this.axios.get(this.server_config.url+"/File/download/"+row.id).then(function(response){
+       // }).catch(function(err){
+       //   console.log(err);
+       // });
+       // console.log(row.id);
      }
    },
    created(){

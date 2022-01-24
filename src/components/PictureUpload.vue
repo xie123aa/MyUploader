@@ -28,13 +28,14 @@
       </el-col>
     </el-row>
     <br/>
-    <el-button type="danger" @click="up.start()">开始上传</el-button>
+    <el-button type="danger" @click="uploadStart()">开始上传</el-button>
   </div>
 </template>
 
 <script>
   import Uploader from './Uploader'
   import FileUrl from '../models/file-url'
+  import FileMd5 from "../models/file-md5";
 
   export default {
     name: "PictureUpload",
@@ -69,12 +70,35 @@
           FileUrl(f.getNative(), (err, imgsrc) => {
             f.imgsrc = imgsrc;
             this.changed = !this.changed;
+            FileMd5(f.getNative(), (e, md5) => {
+              f["md5"] = md5;
+              f.status = 1;
+            });
           });
         });
       },
       deleteFile(index,file) {
         this.images.splice(index,1);
         this.up.removeFile(file);
+      },
+      uploadStart() {
+        let count = 0, size = this.files.length;
+        this.files.forEach((e) => {
+          if (e.status == 1) {
+            this.$http.get(this.server_config.url+'/QuickUpload/?md5='+e.md5)
+              .then((response) => {
+                count += 1;
+                console.log(count);
+                if (!response.data) {
+                  e.status = 5;
+                }
+                if (count == size){
+                  this.up.start();
+                }
+              });
+          }
+        });
+
       }
     }
   }
