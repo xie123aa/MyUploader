@@ -93,7 +93,7 @@
                   e.status = 5;
                 }
                 if (count == size){
-                  this.up.start();
+                  this.up.start(); 9
                 }
               });
           }

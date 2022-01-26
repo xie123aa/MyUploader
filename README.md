@@ -1,7 +1,7 @@
 # MyUploader
 
 > 单文件上传，多文件上传，大文件上传，断点续传，文件秒传，图片上传
-> 
+>
 > 后端项目地址： [https://github.com/gaoyuyue/MyUploader-Backend](https://github.com/gaoyuyue/MyUploader-Backend)
 
 [![Build Status](https://www.travis-ci.org/gaoyuyue/MyUploader.svg?branch=master)](https://www.travis-ci.org/gaoyuyue/MyUploader)
@@ -38,9 +38,9 @@
 - 图片上传：[PictureUpload.vue](https://github.com/gaoyuyue/MyUploader/blob/master/src/components/PictureUpload.vue)
 ## 引入plupload
 > plupload版本: 2.3.6
-> 
+>
 > 官方文档： [https://www.plupload.com/docs/](https://www.plupload.com/docs/)
-> 
+>
 > 中文文档： [http://www.phpin.net/tools/plupload/](http://www.phpin.net/tools/plupload/)
 
 为了方便使用我将plupload封装为成一个vue组件[Uploader.vue](https://github.com/gaoyuyue/MyUploader/blob/master/src/components/Uploader.vue)
@@ -55,7 +55,7 @@
         @inputUploader="inputUploader"
       />
       <el-button id="browse_button" type="primary">选择文件</el-button>
-      <span v-for="file in files">{{file.name}}</span>
+      <span v-for="fileMeta in files">{{fileMeta.name}}</span>
       <el-button type="danger" @click="up.start()">开始上传</el-button>
     </div>
 </template>
@@ -97,17 +97,17 @@
 ## 计算文件MD5值（用于文件妙传）
 采用js-spark-md5.js, 项目地址： [https://github.com/satazor/js-spark-md5](https://github.com/satazor/js-spark-md5)
 
-**file-md5.js**
+**fileMeta-md5.js**
 ```javascript
 'use strict';
 
 import '../plugins/js-spark-md5.js'
 
-export default function (file, callback) {
+export default function (fileMeta, callback) {
   var blobSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
-    file = file,
+    fileMeta = fileMeta,
     chunkSize = 2097152,                             // Read in chunks of 2MB
-    chunks = Math.ceil(file.size / chunkSize),
+    chunks = Math.ceil(fileMeta.size / chunkSize),
     currentChunk = 0,
     spark = new SparkMD5.ArrayBuffer(),
     fileReader = new FileReader();
@@ -131,9 +131,9 @@ export default function (file, callback) {
 
   function loadNext() {
     var start = currentChunk * chunkSize,
-      end = ((start + chunkSize) >= file.size) ? file.size : start + chunkSize;
+      end = ((start + chunkSize) >= fileMeta.size) ? fileMeta.size : start + chunkSize;
 
-    fileReader.readAsArrayBuffer(blobSlice.call(file, start, end));
+    fileReader.readAsArrayBuffer(blobSlice.call(fileMeta, start, end));
   }
 
   loadNext();
@@ -144,10 +144,10 @@ export default function (file, callback) {
 ## 图片预览
 使用FileReader读取文件并转成Base64编码字符串, 填入`<image/>`标签的src属性上，即可实现图片预览功能。
 
-**file-url.js**
+**fileMeta-url.js**
 ```javascript
-export default function (file, callback) {
-  if (!file || !/image\//.test(file.type)) return;
+export default function (fileMeta, callback) {
+  if (!fileMeta || !/image\//.test(fileMeta.type)) return;
   let fileReader = new FileReader();
   fileReader.onload = function () {
     callback(null,fileReader.result);
@@ -155,7 +155,7 @@ export default function (file, callback) {
   fileReader.onerror = function () {
     callback('oops, something went wrong.');
   };
-  fileReader.readAsDataURL(file);
+  fileReader.readAsDataURL(fileMeta);
 }
 ```
 
