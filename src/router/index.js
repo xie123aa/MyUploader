@@ -10,6 +10,8 @@ import FileDownload from '../components/FileDownload'
 import Login from '../components/Login'
 import Home from '../components/Home'
 import SinglePicture from '../components/SinglePicture'
+import SingleVideoFileUpload from '../components/SingleVideoFileUpload'
+import FileBrowser from '../components/FileBrowser'
 
 
 Vue.use(Router)
@@ -62,6 +64,16 @@ export default new Router({
           component: StopUpload
         },
         {path:'/singlePicture',component:SinglePicture,name:'SinglePicture'},
+        {
+          path: '/singleVideoFileUpload',
+          name: 'SingleVideoFileUpload',
+          component: SingleVideoFileUpload
+        },
+        {
+          path: '/fileBrowser',
+          name: 'FileBrowser',
+          component: FileBrowser
+        },
 
       ]},
     {path:'/',component:Login,name:'Login'}

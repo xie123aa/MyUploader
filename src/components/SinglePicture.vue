@@ -1,8 +1,5 @@
 <template>
   <div>
-    asdsadsa
-<!--    style="width: 100px; height: 100px"-->
-
     <el-image
       :src="server_config.url+'/File/download/'+fileId"
       :preview-src-list="fileUrl">
@@ -19,11 +16,14 @@ export default {
       images: [],
       fileUrl:[],
       changed: false,
-      fileId:""
+      fileId:"",
     }
   },
   created() {
     this.initPicture();
+  },
+
+  mounted() {
   },
 
   methods:{
@@ -33,10 +33,8 @@ export default {
       this.fileId=this.$route.query.fileId
       this.axios.get(this.server_config.url+"/File/getFileList").then(response=>{
         this.files = response.data;
-        // let file = files.find(x=>x.id =fileId);
         this.fileUrl=this.files.map(e=>this.server_config.url+'/File/download/'+e.id)
         console.log(this.fileUrl)
-        // console.log(file);
         console.log(response.data)
       }).catch(err=>{
         console.log(err);
