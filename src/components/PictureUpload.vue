@@ -91,9 +91,10 @@
                 console.log(count);
                 if (!response.data) {
                   e.status = 5;
+                  return;
                 }
                 if (count == size){
-                  this.up.start(); 9
+                  this.up.start();
                 }
               });
           }

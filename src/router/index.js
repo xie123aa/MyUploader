@@ -9,6 +9,7 @@ import PictureUpload from '../components/PictureUpload'
 import FileDownload from '../components/FileDownload'
 import Login from '../components/Login'
 import Home from '../components/Home'
+import SinglePicture from '../components/SinglePicture'
 
 
 Vue.use(Router)
@@ -59,9 +60,11 @@ export default new Router({
           path: '/stopUpload',
           name: 'stopUpload',
           component: StopUpload
-        }
+        },
+        {path:'/singlePicture',component:SinglePicture,name:'SinglePicture'},
 
       ]},
     {path:'/',component:Login,name:'Login'}
+
   ]
 })

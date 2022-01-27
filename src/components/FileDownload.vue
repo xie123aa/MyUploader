@@ -22,7 +22,13 @@
         <el-table-column
           label="图片预览">
           <template slot-scope="scope">
-            <img width="120px" height="120px" :src="server_config.url+'/File/downloadThumb/'+scope.row.id" class="image">
+            <el-image
+              style="width: 100px; height: 100px"
+              :src="server_config.url+'/File/downloadThumb/'+scope.row.id"  @click="goDetail(scope.row.id)">
+<!--              :preview-src-list="server_config.url+'/File/download/'+scope.row.id">-->
+            </el-image>
+<!--            <img width="120px" height="120px" :src="server_config.url+'/File/downloadThumb/'+scope.row.id" class="image"-->
+<!--                 @click="goDetail(scope.row.id)">-->
           </template>
         </el-table-column>
         <el-table-column
@@ -76,10 +82,8 @@
      onCurrentChange(page) {
        let _this = this;
        this.axios.get(this.server_config.url+"/File/getPage?pageNum="+this.page+'&pageSize='+this.pageSize).then(function(response){
-         console.log(response.data.list);
          _this.fileList = response.data.list;
          _this.total=response.data.total;
-         console.log(response.data);
        }).catch(function(err){
          console.log(err);
        });
@@ -88,6 +92,13 @@
        this.pageSize = currentSize;
        this.onCurrentChange(pageSize);
      },
+     goDetail(id) {
+       console.log(id)
+       this.$router.push({
+         path: "/singlePicture",
+         query: {fileId: id}
+       });
+     }
    },
    mounted(){
      this.onCurrentChange();
