@@ -25,11 +25,16 @@ export default {
   methods:{
 
     submit(){
+      if(this.username=='admin'&&this.password=='11111'){
+        //暂时这样写
+        this.$router.push({
+          path: `/home`,
+        })
+      }
+      else {
+        alert("账号密码错误")
+      }
 
-      //暂时这样写
-      this.$router.push({
-        path: `/home`,
-      })
       // login({
       //   password: this.password,
       //   username: this.username,
